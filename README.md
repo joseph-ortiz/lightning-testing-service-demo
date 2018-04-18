@@ -1,2 +1,14 @@
-# lightning-testing-service-demo
-Getting Started with the Lightning Testing Service
+# SFDX  App
+
+## Dev, Build and Test
+
+
+## Resources
+
+
+## Description of Files and Directories
+
+
+## Issues
+
+
