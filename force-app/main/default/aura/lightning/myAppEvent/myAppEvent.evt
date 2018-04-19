@@ -1,0 +1,3 @@
+<aura:event type="APPLICATION" description="Verify App Event">
+    <aura:attribute name="message" type="String" />
+</aura:event>
