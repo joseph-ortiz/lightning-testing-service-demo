@@ -23,6 +23,7 @@ describe("Lightning Component Testing Examples", function() {
 
     describe('c:componentWithDataBinding', function () {
         it('verify data binding', function (done) {
+            console.log($T);
            $T.createComponent('c:componentWithDataBinding', {message: 'Hello World!'}, true)
               .then(function (component) {
                 
@@ -35,4 +36,5 @@ describe("Lightning Component Testing Examples", function() {
            });
         });
      });
+     
 });
