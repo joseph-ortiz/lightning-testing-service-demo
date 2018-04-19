@@ -64,4 +64,21 @@ describe("Lightning Component Testing Examples", function() {
                 });
          })
      })
+
+     describe('c:accountList', function(){
+        it('verify server method invocation', function (done) {
+            $T.createComponent("c:accountList")
+                .then(function(component){
+                expect(component.get("v.accounts").length).toBe(0);
+                    $T.run(component.loadAccounts);
+                    return $T.waitFor(function () {
+                        return component.get("v.accounts").length === 3;
+                    })
+                }).then(function() {
+                    done();
+                }).catch(function (e) {
+                    done.fail();
+                });
+        })
+     });
 });
