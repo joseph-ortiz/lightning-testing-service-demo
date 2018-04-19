@@ -50,4 +50,18 @@ describe("Lightning Component Testing Examples", function() {
                 });
         })
      });
+
+     describe('c:componentListeningToAppEvent', function() {
+         it('verify application event', function (done){
+             $T.createComponent("c:componentListeningToAppEvent")
+                .then(function (component) {
+                    $T.fireApplicationEvent("c:myAppEvent", {"message": "event fired"});
+                    expect(component.get("v.message")).toBe("event fired");
+                    done();
+                })
+                .catch(function (e) {
+                    done.fail(e);
+                });
+         })
+     })
 });
