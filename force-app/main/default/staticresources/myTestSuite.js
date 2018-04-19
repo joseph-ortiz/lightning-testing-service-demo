@@ -37,4 +37,17 @@ describe("Lightning Component Testing Examples", function() {
         });
      });
      
+     describe("c:componentWithMethod", function() {
+        it('verify method invocation', function(done) {
+            $T.createComponent("c:componentWithMethod", {}, false)
+                .then(function (component) {
+                    expect(component.get("v.counter")).toBe(0);
+                    component.increment();
+                    expect(component.get("v.counter")).toBe(1);
+                    done();
+                }).catch(function (e) {
+                    done.fail(e);
+                });
+        })
+     });
 });
