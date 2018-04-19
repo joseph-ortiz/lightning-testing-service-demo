@@ -65,16 +65,41 @@ describe("Lightning Component Testing Examples", function() {
          })
      })
 
-     describe('c:accountList', function(){
-        it('verify server method invocation', function (done) {
-            $T.createComponent("c:accountList")
+    //  describe('c:accountList', function(){
+    //     it('verify server method invocation', function (done) {
+    //         $T.createComponent("c:accountList")
+    //             .then(function(component){
+    //             expect(component.get("v.accounts").length).toBe(0);
+    //                 $T.run(component.loadAccounts);
+    //                 return $T.waitFor(function () {
+    //                     return component.get("v.accounts").length === 3;
+    //                 })
+    //             }).then(function() {
+    //                 done();
+    //             }).catch(function (e) {
+    //                 done.fail();
+    //             });
+    //     })
+    //  });
+    describe('c:accountList', function(){
+        it('verify mocked server method invocation', function (done) {
+            $T.createComponent("c:accountList", {}, true)
                 .then(function(component){
-                expect(component.get("v.accounts").length).toBe(0);
-                    $T.run(component.loadAccounts);
-                    return $T.waitFor(function () {
-                        return component.get("v.accounts").length === 3;
-                    })
-                }).then(function() {
+                    var mockResponse = {
+                        getState: function(){
+                            return "SUCCESS";
+                        },
+                        getReturnValue: function(){
+                            return [{"Name": "Account 1"}, {"Name": "Account 2"}];
+                        }
+                    };
+                    spyOn($A, "enqueueAction").and.callFake(function (action) {
+                        var cb = action.getCallback("SUCCESS");
+                        cb.fn.apply(cb.s, [mockResponse]); //WHAT is cb.s ?; the value is undefined.
+                    });
+                    component.loadAccounts();
+                    expect(component.get("v.accounts").length).toBe(2);
+                    expect(component.get("v.accounts")[0]['Name']).toContain("Account 1");
                     done();
                 }).catch(function (e) {
                     done.fail();
